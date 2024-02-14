@@ -44,3 +44,7 @@ body {
 	/*사이의 간격을 떨어뜨림 양 쪽으로*/
 	padding: 1em;
 }
+
+.task-done {
+	text-decoration: line-through;
+}
