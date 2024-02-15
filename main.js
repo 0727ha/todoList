@@ -140,3 +140,11 @@ document.querySelector("h1").addEventListener("click", function () {
 		alert("오늘 하루도 화이팅 !!");
 	}
 });
+// Enter 키 이벤트 처리
+taskInput.addEventListener("keyup", function (event) {
+	// Enter 키인 경우
+	if (event.keyCode === 13) {
+		event.preventDefault(); // 기본 이벤트 방지
+		addTask(); // 할 일 추가 함수 호출
+	}
+});
