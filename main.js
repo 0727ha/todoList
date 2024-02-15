@@ -25,16 +25,19 @@ for (let i = 1; i < tabs.length; i++) {
 	});
 }
 function addTask() {
-
-	let task = {
-		id: randomIDGenerate(),
-		taskContent: taskInput.value,
-		isComplete: false
-	};
-	taskList.push(task);
-	console.log(taskList);
-	render();
+	let taskContent = taskInput.value.trim(); // 입력된 텍스트를 양쪽의 공백을 제거하여 가져옴
+	if (taskContent !== "") { // 텍스트가 비어 있지 않은 경우에만 처리
+		let task = {
+			id: randomIDGenerate(),
+			taskContent: taskContent,
+			isComplete: false
+		};
+		taskList.push(task);
+		taskInput.value = ""; // 입력한 내용을 추가한 후에 input 요소의 값을 지움
+		render();
+	}
 }
+
 
 function render() {
 	//1.내가 선택한 탭에 따라서
@@ -54,16 +57,16 @@ function render() {
 			resultHTML += `<div class="task">
 		<div class ="task-done">${list[i].taskContent}</div>
 		<div>
-			<button onclick ="taskComplete('${list[i].id}')">Check</button>
-			<button onclick="deleteTask('${list[i].id}')">delete</button>
+			<i class="fa-regular fa-circle-check" onclick="taskComplete('${list[i].id}')"></i>
+			<i class="fa-solid fa-trash-can" onclick="deleteTask('${list[i].id}')"></i> 
 		</div>
 	</div>`;
 		} else {
 			resultHTML += `<div class="task">
 		<div>${list[i].taskContent}</div>
 		<div>
-			<button onclick ="taskComplete('${list[i].id}')">Check</button>
-			<button onclick="deleteTask('${list[i].id}')">delete</button>
+		<i class="fa-regular fa-circle-check" onclick="taskComplete('${list[i].id}')"></i>
+		<i class="fa-solid fa-trash-can" onclick="deleteTask('${list[i].id}')"></i> 
 		</div>
 	</div>`;
 		}
@@ -126,3 +129,14 @@ function filter(Event) {
 function randomIDGenerate() {
 	return '_' + Math.random().toString(36).substring(2, 9);/*데이터에 랜덤 아이디 값을 지정해준거야. */
 }
+
+document.querySelector("h1").addEventListener("click", function () {
+	// 사용자에게 다짐을 입력받는 창을 띄웁니다.
+	let affirmation = prompt("오늘의 다짐을 입력하세요");
+	// 입력된 다짐이 비어있지 않은 경우에만 처리
+	if (affirmation !== null && affirmation.trim() !== "") {
+		alert("오늘의 다짐:  " + affirmation);
+	} else {
+		alert("오늘 하루도 화이팅 !!");
+	}
+});

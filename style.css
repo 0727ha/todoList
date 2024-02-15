@@ -3,6 +3,7 @@ body {
 	background-image: url("image/backImg.png");
 	background-repeat: no-repeat;
 	background-size: cover;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .container {
@@ -12,9 +13,26 @@ body {
 	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+h1 {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 3em;
+	/* 큰 사이즈로 설정 */
+	border-radius: 30px;
+	/* 둥글게 만들기 */
+	padding: 15px;
+	/* 내부 여백 추가 */
+	color: rgb(6, 40, 103);
+	text-align: center;
+	/* 가운데 정렬 */
+	font-weight: 700;
+	/* 글꼴의 두께를 두꺼운(700)으로 설정 */
+}
+
+
 .task-area {
 	border: 1px solid lightgray;
 	margin-top: 2em;
+	border-radius: 5px;
 }
 
 .task-tabs {
@@ -29,9 +47,9 @@ body {
 
 #under-line {
 	height: 4px;
-	background-color: pink;
+	background-color: rgb(160, 103, 163);
 	position: absolute;
-	width: 80px;
+	width: 70px;
 	left: 0px;
 	top: 52px;
 	padding: 0px;
@@ -47,8 +65,48 @@ body {
 
 .task-done {
 	text-decoration: line-through;
+	text-decoration-thickness: 2px;
+	background-color: lightgrey;
+	color: red;
 }
 
 .task-tabs div {
 	cursor: pointer;
+}
+
+.task i {
+	font-size: 25px;
+	/* 아이콘 크기 조정 */
+	color: rgb(6, 40, 103);
+	/* 아이콘 색상 */
+	margin-right: 20px;
+	/* 아이콘과 텍스트 사이의 간격 조정 */
+
+}
+
+#add-button {
+	font-size: 25px;
+	height: 20px;
+	text-align: center;
+
+}
+
+#task-input {
+	width: 300px;
+	/* 너비 조정 */
+	height: 30px;
+	/* 높이 조정 */
+	border-radius: 5px;
+}
+
+#all {
+	font-weight: bold;
+}
+
+#ongoing {
+	font-weight: bold;
+}
+
+#done {
+	font-weight: bold;
 }
