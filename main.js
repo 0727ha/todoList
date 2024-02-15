@@ -12,10 +12,18 @@
 
 let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
+let tabs = document.querySelectorAll(".task-tabs div");//여러개를 가져와야하니까 querySelector사용함 , task-tabs밑의 div들을 모두 가져오겠다는 의미
 let taskList = [];
+let mode = "all";
+let filterList = [];
 addButton.addEventListener("click", addTask);//버튼에 이벤트 주고싶음 addEventListener이거 사용.
 
 
+for (let i = 1; i < tabs.length; i++) {
+	tabs[i].addEventListener("click", function (Event) {
+		filter(Event);
+	});
+}
 function addTask() {
 
 	let task = {
@@ -29,22 +37,33 @@ function addTask() {
 }
 
 function render() {
-	let resultHTML = '';
-	for (let i = 0; i < taskList.length; i++) {
-		if (taskList[i].isComplete == true) {
+	//1.내가 선택한 탭에 따라서
+	let list = [];
+	if (mode === "all") {
+		list = taskList;
+	} else if (mode === "ongoing" || mode === "done") {
+		list = filterList;//전역변수가 되었으므로 접근 가능
+	}
+	//2.리스트를 달리 보여준다
+
+	//3.all 선택시 taskList
+	//4.ongoing, done 시 filterList
+	let resultHTML = "";
+	for (let i = 0; i < list.length; i++) {
+		if (list[i].isComplete == true) {
 			resultHTML += `<div class="task">
-		<div class ="task-done">${taskList[i].taskContent}</div>
+		<div class ="task-done">${list[i].taskContent}</div>
 		<div>
-			<button onclick ="taskComplete('${taskList[i].id}')">Check</button>
-			<button onclick="deleteTask('${taskList[i].id}')">delete</button>
+			<button onclick ="taskComplete('${list[i].id}')">Check</button>
+			<button onclick="deleteTask('${list[i].id}')">delete</button>
 		</div>
 	</div>`;
 		} else {
 			resultHTML += `<div class="task">
-		<div>${taskList[i].taskContent}</div>
+		<div>${list[i].taskContent}</div>
 		<div>
-			<button onclick ="taskComplete('${taskList[i].id}')">Check</button>
-			<button onclick="deleteTask('${taskList[i].id}')">delete</button>
+			<button onclick ="taskComplete('${list[i].id}')">Check</button>
+			<button onclick="deleteTask('${list[i].id}')">delete</button>
 		</div>
 	</div>`;
 		}
@@ -75,6 +94,34 @@ function deleteTask(id) {
 		}
 	}
 	render();//UI반드시 같이 업데이트 하기!!
+}
+function filter(Event) {
+	mode = Event.target.id;
+	filterList = [];
+	if (mode === "all") {
+		//전체 리스트를 보여준다
+		render();
+	} else if (mode === "ongoing") {
+		//진행중인 리스트를 보여준다
+		//task.isComplete=false
+		for (let i = 0; i < taskList.length; i++) {
+			if (taskList[i].isComplete === false) {
+				filterList.push(taskList[i]);
+			}
+		}
+		render();//UI에 표시해주기
+		console.log("진행중", filterList);
+	} else if (mode === "done") {
+		//끝난 리스트를 보여준다
+		//task.isComplete=true
+		for (let i = 0; i < taskList.length; i++) {
+			if (taskList[i].isComplete === true) {
+				filterList.push(taskList[i]);
+			}
+		}
+		render();
+	}
+
 }
 function randomIDGenerate() {
 	return '_' + Math.random().toString(36).substring(2, 9);/*데이터에 랜덤 아이디 값을 지정해준거야. */
