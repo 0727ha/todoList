@@ -18,6 +18,20 @@ let mode = "all";
 let filterList = [];
 addButton.addEventListener("click", addTask);//버튼에 이벤트 주고싶음 addEventListener이거 사용.
 
+/*밑의 코드 재공부 */
+let underLine = document.getElementById("under-line");
+let underMenu = document.querySelectorAll(".task-tabs div");
+
+underMenu.forEach((menu) =>
+	menu.addEventListener("click", (e) => underIndicator(e))
+);
+
+function underIndicator(e) {
+	underLine.style.left = e.currentTarget.offsetLeft + "px";
+	underLine.style.width = e.currentTarget.offsetWidth + "px";
+	underLine.style.top =
+		e.currentTarget.offsetTop + e.currentTarget.offsetHeight + "px";
+}
 
 for (let i = 1; i < tabs.length; i++) {
 	tabs[i].addEventListener("click", function (Event) {
@@ -51,7 +65,7 @@ function render() {
 
 	//3.all 선택시 taskList
 	//4.ongoing, done 시 filterList
-	let resultHTML = "";
+	let resultHTML = '';
 	for (let i = 0; i < list.length; i++) {
 		if (list[i].isComplete == true) {
 			resultHTML += `<div class="task">
@@ -85,8 +99,9 @@ function taskComplete(id) {
 			break;
 		}
 	}
-	render();
 	console.log(taskList);
+	filter();
+
 }
 
 function deleteTask(id) {
@@ -96,10 +111,14 @@ function deleteTask(id) {
 			break;
 		}
 	}
-	render();//UI반드시 같이 업데이트 하기!!
+	console.log(taskList);
+	filter();//UI반드시 같이 업데이트 하기!!
 }
 function filter(Event) {
-	mode = Event.target.id;
+
+	if (Event) {
+		mode = Event.target.id;
+	}
 	filterList = [];
 	if (mode === "all") {
 		//전체 리스트를 보여준다
